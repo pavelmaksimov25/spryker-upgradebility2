@@ -2,6 +2,7 @@
 
 ## Downloaded laravel 5.8 project
 1. The project is no longer supported.
+```git clone git@github.com:yeamin27/MU-CSE-Society.git```
 2. Installed laradoc and started the project with nginx and mysql.
 3. Made it work.
 
