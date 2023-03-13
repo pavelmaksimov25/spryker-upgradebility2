@@ -27,4 +27,6 @@ Replaced simple `return []` by the more complicated `return array_merge($configP
 
 Replaced simple `return []` by the more complicated `return array_merge($configPart1, $configPart2);`
 
+### required section packages
 
+![img.png](resources/docs/img.png)
