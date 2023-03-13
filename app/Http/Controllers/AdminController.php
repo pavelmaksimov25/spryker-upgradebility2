@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Album;
+use App\Models\Event;
+use App\Models\Member;
+use App\Models\Message;
+use App\Models\News;
 use Illuminate\Http\Request;
-use App\Message;
-use App\News;
-use App\Event;
-use App\Member;
-use App\Album;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {

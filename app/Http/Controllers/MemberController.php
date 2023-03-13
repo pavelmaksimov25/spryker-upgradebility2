@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Member;
+use App\Models\Role;
 use Illuminate\Http\Request;
-use App\Role;
-use App\Member;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {

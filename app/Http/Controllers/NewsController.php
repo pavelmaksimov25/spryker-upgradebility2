@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use Illuminate\Http\Request;
-use App\News;
 
 class NewsController extends Controller
 {
@@ -58,6 +58,12 @@ class NewsController extends Controller
         $news->pinned = $pinned;
 
         $news->save();
+
+        activity()
+            ->performedOn($news)
+            ->causedBy($request->user())
+            ->log('A new news item was added.');
+
         return redirect('/admin/news')->with('status', 'News Added Successfully.');
     }
 

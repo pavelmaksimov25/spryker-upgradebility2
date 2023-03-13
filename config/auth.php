@@ -1,6 +1,6 @@
 <?php
 
-return [
+$auth = [
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => null,
         ],
 
         // 'users' => [
@@ -100,3 +100,14 @@ return [
     ],
 
 ];
+
+$dbProvider = [
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => '\App\Models\User',
+        ],
+    ],
+];
+
+return array_merge($auth, $dbProvider);

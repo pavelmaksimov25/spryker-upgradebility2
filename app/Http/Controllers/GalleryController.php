@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Album;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
-use App\Album;
-use App\Gallery;
+use Illuminate\Support\Facades\DB;
 
 class GalleryController extends Controller
 {
