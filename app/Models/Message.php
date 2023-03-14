@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Message extends Model
+class Message extends CustomModel
 {
     //
     public $fillable = ['name', 'email', 'message'];
-    
+
     protected $attributes = array(
         'read_status' => 0,
-     );
+    );
 }

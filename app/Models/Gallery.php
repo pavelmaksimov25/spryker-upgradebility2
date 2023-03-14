@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Gallery extends Model
+class Gallery extends CustomModel
 {
     public $fillable = ['albumId', 'image', 'caption'];
 }

@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class News extends Model
+class News extends CustomModel
 {
     public $fillable = ['date', 'title', 'image', 'news', 'pinned'];
-    
+
     protected $attributes = array(
         'pinned' => 0,
-     );
+    );
 }

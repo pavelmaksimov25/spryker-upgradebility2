@@ -2,13 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Event extends Model
+class Event extends CustomModel
 {
-    public $fillable = ['title', 'date', 'stime', 'etime', 'image', 'place', 'description', 'registration', 'ended', 'photos'];
-    
+    public $fillable = [
+        'title',
+        'date',
+        'stime',
+        'etime',
+        'image',
+        'place',
+        'description',
+        'registration',
+        'ended',
+        'photos'
+    ];
+
     protected $attributes = array(
         'ended' => 0,
-     );
+    );
 }

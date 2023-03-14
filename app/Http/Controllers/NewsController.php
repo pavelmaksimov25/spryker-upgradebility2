@@ -59,10 +59,7 @@ class NewsController extends Controller
 
         $news->save();
 
-        activity()
-            ->performedOn($news)
-            ->causedBy($request->user())
-            ->log('A new news item was added.');
+        $this->logActivity($request, $news, 'A new news item was added.');
 
         return redirect('/admin/news')->with('status', 'News Added Successfully.');
     }
@@ -108,6 +105,9 @@ class NewsController extends Controller
         $news->news = $request->input('news');
         $news->pinned = $pinned;
         $news->save();
+
+        $this->logActivity($request, $news, "News item `$news->title` was updated.");
+
         return redirect('/admin/news')->with('status', 'News Updated Successfully.');
     }
 
@@ -118,14 +118,23 @@ class NewsController extends Controller
 
         // deleting imgage
         $path = dirname(__FILE__) . "/../../../" . 'public/images/' . $news->image;
-        if ( is_Writable($path) ) {
+        if ($news->image && is_file($path) && is_writable($path)) {
             unlink($path);
-        } else {
-            return redirect('/admin/news')->with('error', 'Something Went Wrong.');
         }
         // end of image delete
         
         $news->delete();
+
+        $this->logActivity($request, $news, "News item `$news->title` was deleted.");
+
         return redirect('/admin/news')->with('status', 'News Deleted Successfully.');
+    }
+
+    protected function logActivity(Request $request, News $news, string $message): void
+    {
+        activity()
+            ->performedOn($news)
+            ->causedBy($request->user())
+            ->log($message);
     }
 }
