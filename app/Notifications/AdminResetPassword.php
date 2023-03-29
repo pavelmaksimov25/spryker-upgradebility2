@@ -2,8 +2,8 @@
 
 namespace App\Notifications;
 
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class AdminResetPassword extends Notification
 {
@@ -16,8 +16,6 @@ class AdminResetPassword extends Notification
 
     /**
      * Create a new notification instance.
-     *
-     * @param $token
      */
     public function __construct($token)
     {

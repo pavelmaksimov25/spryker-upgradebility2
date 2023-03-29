@@ -16,7 +16,7 @@ class MemberController extends Controller
 
     public function index()
     {
-        $title = "Committee";
+        $title = 'Committee';
         $roles = Role::orderBy('rank', 'ASC')->get();
         $topMember = DB::table('members')->join('roles', 'roles.id', '=', 'members.role_id')->skip(0)->take(3)->orderBy('rank', 'ASC')->get(['members.*', 'roles.role', 'roles.rank']);
 
@@ -27,15 +27,17 @@ class MemberController extends Controller
         } else {
             $others = Member::where('name', '=', 'null');
         }
+
         return view('admin.committee', ['title' => $title, 'roles' => $roles, 'topMember' => $topMember, 'others' => $others]);
     }
 
     public function addForm()
     {
-        $title = "Committee";
+        $title = 'Committee';
         $roles = Role::orderBy('rank', 'ASC')->get();
-        $action = "/admin/insertMember";
-        $button = "Save";
+        $action = '/admin/insertMember';
+        $button = 'Save';
+
         return view('admin.memberEditForm', ['title' => $title, 'roles' => $roles, 'action' => $action, 'button' => $button]);
     }
 
@@ -43,14 +45,14 @@ class MemberController extends Controller
     {
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'contact' => 'min:5|max:11'
+            'contact' => 'min:5|max:11',
         ]);
 
         $image = null;
         if ($request->hasFile('image')) {
             $imageName = $request->file('image');
             $extension = $imageName->getClientOriginalExtension();
-            $image = date('Y-m-d') . '-' . str_random(10) . '.' . $extension;
+            $image = date('Y-m-d').'-'.str_random(10).'.'.$extension;
             $imageName->move(public_path('images/'), $image);
         }
 
@@ -62,9 +64,10 @@ class MemberController extends Controller
         $member->contact = $request->input('contact');
         $member->address = $request->input('address');
         $member->session = $request->input('period');
-        $member->work = $request->input('work')===null? "" : $request->input('work');
+        $member->work = $request->input('work') === null ? '' : $request->input('work');
 
         $member->save();
+
         return redirect('/admin/committee')->with('status', 'Member Added Successfully.');
     }
 
@@ -74,9 +77,10 @@ class MemberController extends Controller
         $member = DB::table('members')->join('roles', 'roles.id', '=', 'members.role_id')->where('members.id', '=', $id)->first(['members.*', 'roles.role', 'roles.rank']);
         $roles = Role::orderBy('rank', 'ASC')->get();
 
-        $title = "Committee";
-        $action = "/admin/updateMember";
-        $button = "Update";
+        $title = 'Committee';
+        $action = '/admin/updateMember';
+        $button = 'Update';
+
         return view('admin.memberEditForm', ['title' => $title, 'member' => $member, 'roles' => $roles, 'action' => $action, 'button' => $button]);
     }
 
@@ -87,14 +91,14 @@ class MemberController extends Controller
 
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'contact' => 'min:5|max:11'
+            'contact' => 'min:5|max:11',
         ]);
 
         $image = $request->get('imageOld');
         if ($request->hasFile('image')) {
             $imageName = $request->file('image');
             $extension = $imageName->getClientOriginalExtension();
-            $image = date('Y-m-d') . '-' . str_random(10) . '.' . $extension;
+            $image = date('Y-m-d').'-'.str_random(10).'.'.$extension;
             $imageName->move(public_path('images/'), $image);
         }
 
@@ -105,9 +109,10 @@ class MemberController extends Controller
         $member->contact = $request->input('contact');
         $member->address = $request->input('address');
         $member->session = $request->input('period');
-        $member->work = $request->input('work')===null? "" : $request->input('work');
+        $member->work = $request->input('work') === null ? '' : $request->input('work');
 
         $member->save();
+
         return redirect('/admin/committee')->with('status', 'Member Updated Successfully.');
     }
 
@@ -117,15 +122,16 @@ class MemberController extends Controller
         $member = Member::find($id);
 
         // deleting imgage
-        $path = dirname(__FILE__) . "/../../../" . 'public/images/' . $member->image;
-        if ( is_Writable($path) ) {
+        $path = dirname(__FILE__).'/../../../'.'public/images/'.$member->image;
+        if (is_writable($path)) {
             unlink($path);
         } else {
             return redirect('/admin/committee')->with('error', 'Something Went Wrong.');
         }
         // end of image delete
-        
+
         $member->delete();
+
         return redirect('/admin/committee')->with('status', 'Member Deleted Successfully.');
     }
 
@@ -136,6 +142,7 @@ class MemberController extends Controller
         $role->rank = $request->input('rank');
 
         $role->save();
+
         return redirect('/admin/committee')->with('status', 'Member Role Added Successfully.');
     }
 
@@ -147,6 +154,7 @@ class MemberController extends Controller
         $role->rank = $request->input('rank');
 
         $role->save();
+
         return redirect('/admin/committee')->with('status', 'Member Role Updated Successfully.');
     }
 
@@ -155,6 +163,7 @@ class MemberController extends Controller
         $id = $request->get('id');
         $role = Role::find($id);
         $role->delete();
+
         return redirect('/admin/committee')->with('status', 'Role Deleted Successfully.');
     }
 }

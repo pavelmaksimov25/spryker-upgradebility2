@@ -16,7 +16,7 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
         $news = News::where('pinned', '=', false)->orderBy('date', 'DESC')->get();
@@ -34,25 +34,27 @@ class AdminController extends Controller
         }
 
         $albums = Album::get();
+
         return view('admin.adminHome', ['news' => $news, 'pinned' => $pinned, 'newEvent' => $newEvent, 'oldEvent' => $oldEvent, 'topMember' => $topMember, 'others' => $others, 'albums' => $albums]);
     }
 
     public function goToAlbum(Request $request)
     {
-        $title = "Gallery";
+        $title = 'Gallery';
 
         $id = $request->get('id');
         $album = Album::find($id);
         $albumName = $album->albumName;
         $photos = DB::table('galleries')->join('albums', 'albums.id', '=', 'galleries.albumId')->where('albums.id', '=', $id)->get(['galleries.*']);
-        
+
         return view('admin.album', ['title' => $title, 'photos' => $photos, 'albumName' => $albumName, 'albumId' => $id]);
     }
 
     public function inbox()
     {
-        $title = "Inbox";
+        $title = 'Inbox';
         $messages = Message::orderBy('created_at', 'DESC')->get();
+
         return view('admin.inbox', ['title' => $title, 'messages' => $messages]);
     }
 
@@ -61,6 +63,7 @@ class AdminController extends Controller
         $id = $request->get('id');
         $message = Message::find($id);
         $message->delete();
+
         return redirect('/admin/inbox')->with('status', 'Message Deleted Successfully.');
     }
 }

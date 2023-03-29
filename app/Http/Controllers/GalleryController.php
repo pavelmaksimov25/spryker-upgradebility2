@@ -16,20 +16,21 @@ class GalleryController extends Controller
 
     public function index()
     {
-        $title = "Gallery";
+        $title = 'Gallery';
         $albums = Album::get();
+
         return view('admin.gallery', ['title' => $title, 'albums' => $albums]);
     }
 
     public function goToAlbum(Request $request)
     {
-        $title = "Gallery";
+        $title = 'Gallery';
 
         $id = $request->get('id');
         $album = Album::find($id);
         $albumName = $album->albumName;
         $photos = DB::table('galleries')->join('albums', 'albums.id', '=', 'galleries.albumId')->where('albums.id', '=', $id)->get(['galleries.*']);
-        
+
         return view('admin.albumControl', ['title' => $title, 'photos' => $photos, 'albumName' => $albumName, 'albumId' => $id]);
     }
 
@@ -39,6 +40,7 @@ class GalleryController extends Controller
         $album->albumName = $request->input('albumName');
 
         $album->save();
+
         return redirect('/admin/gallery')->with('status', 'Album Created Successfully.');
     }
 
@@ -49,6 +51,7 @@ class GalleryController extends Controller
         $album->albumName = $request->input('albumName');
 
         $album->save();
+
         return redirect('/admin/gallery')->with('status', 'Album Updated Successfully.');
     }
 
@@ -57,20 +60,21 @@ class GalleryController extends Controller
         $id = $request->get('id');
         $album = Album::find($id);
         $album->delete();
+
         return redirect('/admin/gallery')->with('status', 'Album Deleted Successfully.');
     }
 
     public function insertPhoto(Request $request)
     {
         $this->validate($request, [
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $image = null;
         if ($request->hasFile('image')) {
             $imageName = $request->file('image');
             $extension = $imageName->getClientOriginalExtension();
-            $image = date('Y-m-d') . '-' . str_random(10) . '.' . $extension;
+            $image = date('Y-m-d').'-'.str_random(10).'.'.$extension;
             $imageName->move(public_path('images/'), $image);
         }
 
@@ -97,6 +101,7 @@ class GalleryController extends Controller
         $photo->caption = $request->input('caption');
 
         $photo->save();
+
         return redirect('/admin/gallery/album?id='.$albumId)->with('status', 'Photo Updated Successfully.');
     }
 
@@ -104,25 +109,25 @@ class GalleryController extends Controller
     {
         $id = $request->input('id');
         $photo = Gallery::find($id);
-        $albumId = $photo->albumId; 
+        $albumId = $photo->albumId;
 
         // deleting imgage
-        $path = dirname(__FILE__) . "/../../../" . 'public/images/' . $photo->image;
-        if ( is_Writable($path) ) {
+        $path = dirname(__FILE__).'/../../../'.'public/images/'.$photo->image;
+        if (is_writable($path)) {
             unlink($path);
         } else {
             return redirect('/admin/gallery/album?id='.$albumId)->with('error', 'Something Went Wrong.');
         }
         // end of image delete
-        
+
         $photo->delete();
 
         $cover = Gallery::where('albumId', '=', $albumId)
         ->orderBy('created_at', 'DESC')->first();
 
         $album = Album::find($albumId);
-        if($cover === null) {
-            $album->coverImage = "no-image-available.jpg";
+        if ($cover === null) {
+            $album->coverImage = 'no-image-available.jpg';
         } else {
             $album->coverImage = $cover->image;
         }
