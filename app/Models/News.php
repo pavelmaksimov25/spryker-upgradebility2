@@ -6,7 +6,7 @@ class News extends CustomModel
 {
     public $fillable = ['date', 'title', 'image', 'news', 'pinned'];
 
-    protected $attributes = array(
+    protected $attributes = [
         'pinned' => 0,
-    );
+    ];
 }

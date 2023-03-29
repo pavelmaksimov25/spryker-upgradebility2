@@ -3,8 +3,8 @@
 namespace App;
 
 use App\Notifications\AdminResetPassword;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {

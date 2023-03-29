@@ -14,10 +14,10 @@ class Event extends CustomModel
         'description',
         'registration',
         'ended',
-        'photos'
+        'photos',
     ];
 
-    protected $attributes = array(
+    protected $attributes = [
         'ended' => 0,
-    );
+    ];
 }

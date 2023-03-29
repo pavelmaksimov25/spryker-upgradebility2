@@ -36,14 +36,16 @@ class HomeController extends Controller
             }
 
             $albums = Album::get();
+
             return view('home.home', ['news' => $news, 'pinned' => $pinned, 'newEvent' => $newEvent, 'oldEvent' => $oldEvent, 'topMember' => $topMember, 'others' => $others, 'albums' => $albums]);
-        } else
+        } else {
             return redirect()->action('AdminController@index');
+        }
     }
 
     public function goToAlbum(Request $request)
     {
-        $title = "Gallery";
+        $title = 'Gallery';
 
         $id = $request->get('id');
         $album = Album::find($id);
@@ -56,6 +58,7 @@ class HomeController extends Controller
     public function insertMessage(Request $request)
     {
         Message::create($request->only('name', 'email', 'message'));
+
         return redirect('/')->with('status', 'Message Sent To Admin.');
     }
 }

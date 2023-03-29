@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -14,17 +15,19 @@ class NewsController extends Controller
 
     public function index()
     {
-        $title = "News";
+        $title = 'News';
         $news = News::where('pinned', '=', false)->orderBy('date', 'DESC')->get();
         $pinned = News::where('pinned', '=', true)->get();
+
         return view('admin.news', ['title' => $title, 'newses' => $news, 'pinned' => $pinned]);
     }
 
     public function addForm()
     {
-        $title = "Add News";
-        $action = "/admin/insertNews";
-        $button = "Save";
+        $title = 'Add News';
+        $action = '/admin/insertNews';
+        $button = 'Save';
+
         return view('admin.newsEditForm', ['title' => $title, 'action' => $action, 'button' => $button]);
     }
 
@@ -32,19 +35,19 @@ class NewsController extends Controller
     {
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date' => 'date_format:d/m/Y'
+            'date' => 'date_format:d/m/Y',
         ]);
 
         $image = null;
         if ($request->hasFile('image')) {
             $imageName = $request->file('image');
             $extension = $imageName->getClientOriginalExtension();
-            $image = date('Y-m-d') . '-' . str_random(10) . '.' . $extension;
+            $image = date('Y-m-d').'-'.Str::random(10).'.'.$extension;
             $imageName->move(public_path('images/'), $image);
         }
 
         $pinned = $request->has('pinned') ? true : false;
-        if($pinned === true) {
+        if ($pinned === true) {
             News::where('pinned', true)->update(['pinned' => false]);
         }
 
@@ -66,11 +69,12 @@ class NewsController extends Controller
 
     public function editForm(Request $request)
     {
-        $title = "Update News";
-        $action = "/admin/updateNews";
-        $button = "Update";
+        $title = 'Update News';
+        $action = '/admin/updateNews';
+        $button = 'Update';
         $id = $request->get('id');
         $news = News::find($id);
+
         return view('admin.newsEditForm', ['title' => $title, 'action' => $action, 'news' => $news, 'button' => $button]);
     }
 
@@ -81,19 +85,19 @@ class NewsController extends Controller
 
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'date' => 'date_format:d/m/Y'
+            'date' => 'date_format:d/m/Y',
         ]);
 
         $image = $request->get('imageOld');
         if ($request->hasFile('image')) {
             $imageName = $request->file('image');
             $extension = $imageName->getClientOriginalExtension();
-            $image = date('Y-m-d') . '-' . str_random(10) . '.' . $extension;
+            $image = date('Y-m-d').'-'.Str::random(10).'.'.$extension;
             $imageName->move(public_path('images/'), $image);
         }
 
         $pinned = $request->has('pinned') ? true : false;
-        if($pinned === true) {
+        if ($pinned === true) {
             News::where('pinned', true)->update(['pinned' => false]);
         }
 
@@ -117,12 +121,12 @@ class NewsController extends Controller
         $news = News::find($id);
 
         // deleting imgage
-        $path = dirname(__FILE__) . "/../../../" . 'public/images/' . $news->image;
+        $path = dirname(__FILE__).'/../../../'.'public/images/'.$news->image;
         if ($news->image && is_file($path) && is_writable($path)) {
             unlink($path);
         }
         // end of image delete
-        
+
         $news->delete();
 
         $this->logActivity($request, $news, "News item `$news->title` was deleted.");

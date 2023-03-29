@@ -11,12 +11,12 @@ use App\Models\News;
 
 trait UselessTrait
 {
-    protected final function useless(): void
+    final protected function useless(): void
     {
         if ($this instanceof News) {
             // This one must be auto-fixed during the shift
             // Because it uses deprecated functionality.
-            echo $this->belongsTo('App\Models\User')->getRelation();
+            echo $this->belongsTo(\App\Models\User::class)->getRelation();
         }
     }
 }
