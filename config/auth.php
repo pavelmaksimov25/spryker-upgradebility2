@@ -126,7 +126,7 @@ $dbProvider = [
 
         'users' => [
             'driver' => 'eloquent',
-            'model' => '\App\Models\User',
+            'model' => \App\Models\User::class,
         ],
     ],
 ];
