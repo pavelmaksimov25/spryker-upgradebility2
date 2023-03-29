@@ -27,6 +27,10 @@ Replaced simple `return []` by the more complicated `return array_merge($configP
 
 Replaced simple `return []` by the more complicated `return array_merge($configPart1, $configPart2);`
 
+### Customized Eloquent core Model class.
+
+Introduced `CustomModel` which extends core `Model` class and adds dummy functionality to `save()` method.
+
 ### required section packages
 
 ![img.png](resources/docs/img.png)
