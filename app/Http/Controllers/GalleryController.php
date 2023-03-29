@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use App\Models\Album;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
@@ -74,7 +75,7 @@ class GalleryController extends Controller
         if ($request->hasFile('image')) {
             $imageName = $request->file('image');
             $extension = $imageName->getClientOriginalExtension();
-            $image = date('Y-m-d').'-'.str_random(10).'.'.$extension;
+            $image = date('Y-m-d').'-'.Str::random(10).'.'.$extension;
             $imageName->move(public_path('images/'), $image);
         }
 
