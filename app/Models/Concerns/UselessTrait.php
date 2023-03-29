@@ -16,7 +16,7 @@ trait UselessTrait
         if ($this instanceof News) {
             // This one must be auto-fixed during the shift
             // Because it uses deprecated functionality.
-            echo $this->belongsTo(\App\Models\User::class)->getRelation();
+            $this->belongsTo(\App\Models\User::class)->getRelationName();
         }
     }
 }
