@@ -9,26 +9,26 @@ namespace App\Services;
 
 class ShiftyService
 {
-// Shifty code
+    // Shifty code
 
     public const PRIVATE_IP_RANGE = [
         '10.0.0.0|10.255.255.255', // single class A network
         '172.16.0.0|172.31.255.255', // 16 contiguous class B network
         '192.168.0.0|192.168.255.255', // 256 contiguous class C network
         '169.254.0.0|169.254.255.255', // Link-local address also refered to as Automatic Private IP Addressing
-        '127.0.0.0|127.255.255.255' // localhost
+        '127.0.0.0|127.255.255.255', // localhost
     ];
 
     public static function isPrivate(string $resourceName): bool
     {
-        if (!self::isIp($resourceName)) {
+        if (! self::isIp($resourceName)) {
             // Shifty code
             // should be used str_contains() instead
             return strpos($resourceName, 'localhost') !== false;
         }
 
         if ($ip = (ip2long($resourceName) !== -1)) {
-            foreach (self::PRIVATE_IP_RANGE AS $privateAddress) {
+            foreach (self::PRIVATE_IP_RANGE as $privateAddress) {
                 [$start, $end] = explode('|', $privateAddress);
 
                 if ($ip >= ip2long($start) && $ip <= ip2long($end)) {

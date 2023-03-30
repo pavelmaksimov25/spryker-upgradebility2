@@ -9,6 +9,6 @@ namespace App\Handlers;
 
 class ShiftyHandler
 {
-// Shifty code
-// Handlers are no longer used in Laravel
+    // Shifty code
+    // Handlers are no longer used in Laravel
 }

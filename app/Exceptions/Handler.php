@@ -50,14 +50,14 @@ class Handler extends ExceptionHandler
     public function report(Throwable $e)
     {
         // Shifty code
-        Log::critical('Shifty message from the ' . self::class);
+        Log::critical('Shifty message from the '.self::class);
 
         $array = ['foo' => 'bar'];
 
         if (function_exists('array_add')) {
             $array = array_add($array, 'key', fake()->title);
 
-            Log::info('custom func usage.',  $array);
+            Log::info('custom func usage.', $array);
         }
     }
 }

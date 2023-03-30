@@ -9,6 +9,6 @@ namespace App\Http\Controllers;
 
 class ShiftyNotProperlyExtendedController extends ShiftyBaseController
 {
-// Shifty code
-// Extends wrong controller
+    // Shifty code
+    // Extends wrong controller
 }

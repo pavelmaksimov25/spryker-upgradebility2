@@ -4,8 +4,8 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
-function array_add($array, $key, $value) {
+function array_add($array, $key, $value)
+{
     $array[$key] = $value;
 
     return $array;

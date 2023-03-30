@@ -9,6 +9,6 @@ namespace App\Http\Controllers;
 
 class ShiftyBaseController extends \Illuminate\Routing\Controller
 {
-// Shifty code
-// Doesn't have basic traits.
+    // Shifty code
+    // Doesn't have basic traits.
 }
