@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,5 +45,19 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function report(Throwable $e)
+    {
+        // Shifty code
+        Log::critical('Shifty message from the ' . self::class);
+
+        $array = ['foo' => 'bar'];
+
+        if (function_exists('array_add')) {
+            $array = array_add($array, 'key', fake()->title);
+
+            Log::info('custom func usage.',  $array);
+        }
     }
 }
