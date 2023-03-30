@@ -9,13 +9,13 @@ namespace App\Events;
 
 class ShiftyEvent
 {
-    public const SHIFT = array(
+    public const SHIFT = [
         'one',
         'two',
-        'three'
-    );
+        'three',
+    ];
 
-    public final function getShifts()
+    final public function getShifts()
     {
         // Shifty code
         // Old code style
