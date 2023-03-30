@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -55,7 +56,7 @@ class Handler extends ExceptionHandler
         $array = ['foo' => 'bar'];
 
         if (function_exists('array_add')) {
-            $array = array_add($array, 'key', fake()->title);
+            $array = Arr::add($array, 'key', fake()->title);
 
             Log::info('custom func usage.', $array);
         }
